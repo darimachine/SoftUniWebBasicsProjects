@@ -1,0 +1,7 @@
+asgiref==3.5.2
+datadispatch==1.0.0
+Django==4.1.4
+psycopg2-binary==2.9.5
+sqlparse==0.4.3
+tasks==2.8.0
+tzdata==2022.7
