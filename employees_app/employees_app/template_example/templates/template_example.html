@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load department_tags %}
+  <h1>{{title}}</h1>
+  <h2>{{employees}}</h2>
+    <div>
+    {% for number in numbers %}
+        <div>
+            {% if number > 200 %}
+                {{ number }} greater than 200
+            {% elif number == 200 %}
+                {{ number }} equals 200
+            {% elif number < 200 %}
+                {{number}} less than 200
+            {%endif%}
+        </div>
+    {% endfor %}
+    </div>
+<div>
+    <ul>
+    {% for employee in employees %}
+        <li>{{employee.first_name}} {{employee.last_name}}
+            {{employee.deparment.name}}
+            {{ employee.get_job_title_display}}
+        </li>
+    {%endfor%}
+     </ul>
+    {% csrf_token %}
+</div>
+<hr>
+{% department_list %}
+{% endblock content%}

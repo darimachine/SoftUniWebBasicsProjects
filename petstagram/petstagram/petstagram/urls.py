@@ -1,4 +1,4 @@
-"""employees_app URL Configuration
+"""petstagram URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.1/topics/http/urls/
@@ -15,10 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from employees.views import home,list_departments
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',home),
-    path('department/',include('employees.urls')),
-    path('template/',include("template_example.urls"),),
+    path('',include('main_app.urls'))
 ]

@@ -25,6 +25,16 @@ def department_details(request):
         'departments':Department.objects.all(),
         'employees': Employee.objects.all(),
     }
+    # for i in Employee.objects.all():
+    #     print(i.deparment.name)
+    j=0
+    for department in Department.objects.all():
+        for employee in department.employee_set.all():
+            j+=1
+
+            print(employee.first_name)
+            print(j)
+    print(j)
     return render(request,'list_departments.html',context=context)
 
 def list_departments(request,id):

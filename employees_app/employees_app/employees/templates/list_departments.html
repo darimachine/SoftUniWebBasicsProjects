@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{%block content%}
     <h1>List of Departments</h1>
     <ol>
         {% for department in departments%}
@@ -13,7 +7,7 @@
             {{department.name}}
             <ol>
                 {% for employee in department.employee_set.all %}
-                    <li>{{employee.first_name}}<li>
+                <li>{{employee.first_name}}</li>
                 {% endfor %}
             </ol>
         </li>
@@ -24,12 +18,10 @@
     <ol>
         {% for employee in employees%}
         <li>
-            {{employee.first_name}} ( {{employee.department.name}} )
+            {{employee.first_name}} ( {{employee.deparment.name}} )
         </li>
 
         {%endfor%}
     </ol>
+{%endblock content%}
 
-</body>
-
-</html>
