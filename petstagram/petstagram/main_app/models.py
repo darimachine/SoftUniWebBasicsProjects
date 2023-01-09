@@ -43,25 +43,61 @@ class Profile(models.Model):
         blank=True,
         choices=GENDERS,
     )
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} Profile"
 class Pet(models.Model):
-    PET_NAME_MAX_LENGHT=30
+    #Constans
+    NAME_MAX_LENGHT=30
     CAT = 'Cat'
     DOG = 'Dog'
     BUNNY = 'Bunny'
     PARROT = 'Parrot'
     FISH='Fish'
     OTHER = 'Other'
-    TYPE=[(x,x) for x in (CAT,DOG,BUNNY,PARROT,FISH,OTHER)]
+    TYPES=[(x,x) for x in (CAT,DOG,BUNNY,PARROT,FISH,OTHER)]
+
+    #Columns
     name =models.CharField(
-        max_length=PET_NAME_MAX_LENGHT,
-        unique=True
+        max_length=NAME_MAX_LENGHT,
+
     )
     type = models.CharField(
-        max_length=max(len(type) for type,_ in TYPE),
-        choices=TYPE
+        max_length=max(len(type) for (type,_) in TYPES),
+        choices=TYPES
     )
-    user = models.ForeignKey(Profile,on_delete=models.CASCADE)
+    #optional
     date_of_birth = models.DateField(
         null=True,
         blank=True,
+    )
+    #One-to-one Relation
+
+    # One-to-many Relations
+
+    user_profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
+    # Many-to_many Relations
+
+    #Properties
+
+    #Methods
+
+    #dunder methods
+
+    #Meta
+
+    class Meta:
+        unique_together=('user_profile','name')
+
+class PetPhoto(models.Model):
+    photo = models.ImageField()
+    tagged_pets = models.ManyToManyField(
+        Pet,
+    )
+    description = models.TextField(
+        null=True,
+        blank=True,
+    )
+    date_of_publication = models.DateTimeField(
+        auto_now_add=True
     )
