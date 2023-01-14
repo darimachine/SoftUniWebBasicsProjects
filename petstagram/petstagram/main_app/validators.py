@@ -7,3 +7,10 @@ def only_letters_validator(value):
                 _('%(value) is not only letter'),
             params={'value': value},
                                   )
+
+def file_max_size_inMB_validator(max_size):
+    def validate(value):
+        filesize = value.file.size
+        if filesize>max_size*1024*1024:
+            raise ValidationError(f"Max file size is {max_size}MB")
+    return validate

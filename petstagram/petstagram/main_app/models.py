@@ -1,6 +1,9 @@
+import datetime
+
 from django.db import models
 from django.core.validators import MinLengthValidator
-from .validators import only_letters_validator
+from .validators import only_letters_validator, file_max_size_inMB_validator
+
 
 # Create your models here.
 class Profile(models.Model):
@@ -63,7 +66,8 @@ class Pet(models.Model):
     )
     type = models.CharField(
         max_length=max(len(type) for (type,_) in TYPES),
-        choices=TYPES
+        choices=TYPES,
+
     )
     #optional
     date_of_birth = models.DateField(
@@ -79,7 +83,9 @@ class Pet(models.Model):
     # Many-to_many Relations
 
     #Properties
-
+    @property
+    def age(self):
+        return datetime.datetime.now().year-self.date_of_birth.year
     #Methods
 
     #dunder methods
@@ -90,9 +96,14 @@ class Pet(models.Model):
         unique_together=('user_profile','name')
 
 class PetPhoto(models.Model):
-    photo = models.ImageField()
+    photo = models.ImageField(
+        validators=(
+            #file_max_size_inMB_validator(5),
+        )
+    )
     tagged_pets = models.ManyToManyField(
         Pet,
+        #validate atleast one pet
     )
     description = models.TextField(
         null=True,
@@ -101,3 +112,8 @@ class PetPhoto(models.Model):
     date_of_publication = models.DateTimeField(
         auto_now_add=True
     )
+    likes = models.IntegerField(
+        default=0
+    )
+    def __str__(self):
+        return f"Photo on {self.tagged_pets.name}"
