@@ -19,8 +19,27 @@ def create_pet(request):
     }
     return render(request,'pet_create.html',context)
 
-def edit_pet(request):
-    return render(request,'pet_edit.html')
+def edit_pet(request,pk):
+    pet = Pet.objects.get(pk=pk)
+    if request.method == "POST":
+        pet_form = CreatePetForm(request.POST, instance=pet)
+        if pet_form.is_valid():
+            pet_form.save()
+            return redirect('profile')
+    else:
+        pet_form = CreatePetForm(instance=pet)
 
-def delete_pet(request):
+    context = {
+        'pet_form': pet_form,
+        'pet':pet,
+    }
+    return render(request, 'pet_edit.html', context)
+
+
+def delete_pet(request,pk):
+    if request.method == "POST":
+        pet = Pet.objects.get(pk=pk)
+        pet.delete()
+        return redirect('profile')
+
     return render(request,'pet_delete.html')

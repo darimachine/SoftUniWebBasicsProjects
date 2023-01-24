@@ -86,7 +86,9 @@ class Pet(models.Model):
     #Properties
     @property
     def age(self):
-        return datetime.datetime.now().year-self.date_of_birth.year
+        if self.date_of_birth:
+            return datetime.datetime.now().year-self.date_of_birth.year
+        return None
     #Methods
 
     #dunder methods

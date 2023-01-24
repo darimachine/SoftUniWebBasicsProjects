@@ -44,10 +44,14 @@
     <div class="d-flex justify-content-start mb-5">
         <!-- Info for First Pet -->
         <div style="width: 18rem;">
-            <h5>Andrew</h5>
-            <p class="mt-2">Age: 3</p>
-            <a href="#" class="btn btn-primary">Edit</a>
-            <a href="#" class="btn btn-danger">Delete</a>
+            {% for pet in pets %}
+                <h5>{{pet.name}}</h5>
+                {% if pet.age %}
+                    <p class="mt-2">Age: {{pet.age}}</p>
+                {% endif %}
+                <a href="{% url 'edit_pet' pet.id %}" class="btn btn-primary">Edit</a>
+                <a href="{% url 'delete_pet' pet.id %}" class="btn btn-danger">Delete</a>
+            {% endfor %}
         </div>
 
         <!-- Info for Second Pet -->
