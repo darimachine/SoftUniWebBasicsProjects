@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.core.validators import MinLengthValidator
 # Create your models here.
 class AuditEntity(models.Model):
     created_on = models.DateField(
@@ -44,6 +44,7 @@ class Employee(models.Model):
         max_length=10,
         unique=True,
         verbose_name='EGN',
+        validators=[MinLengthValidator(10)]
     )
     job_title=models.IntegerField(
         default='',
@@ -59,6 +60,11 @@ class Employee(models.Model):
     )
     #one to many
     deparment = models.ForeignKey(Department,on_delete=models.CASCADE)
+    image = models.ImageField(
+        null=True,
+        blank=True,
+        upload_to='profiles',
+    )
     def __str__(self):
         return f"{self.first_name} employee"
 

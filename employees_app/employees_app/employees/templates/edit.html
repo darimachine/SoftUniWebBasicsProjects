@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1> Edit {{ employee.first_name }} {{ employee.last_name }} </h1>
+<form action="{% url 'edit_employee' employee.pk %}" enctype="multipart/form-data" method="post">
+      {% csrf_token %}
+      {{ employee_form }}
+      <button>Edit</button>
+  </form>
+{% endblock %}

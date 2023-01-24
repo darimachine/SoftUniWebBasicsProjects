@@ -2,7 +2,7 @@ import datetime
 
 from django.db import models
 from django.core.validators import MinLengthValidator
-from .validators import only_letters_validator, file_max_size_inMB_validator
+from .validators import only_letters_validator, ValidateFileMaxSizeInMB, atleastOnePet
 
 
 # Create your models here.
@@ -45,6 +45,7 @@ class Profile(models.Model):
         null=True,
         blank=True,
         choices=GENDERS,
+        default=DO_NOT_SHOW,
     )
     def __str__(self):
         return f"{self.first_name} {self.last_name} Profile"
@@ -98,12 +99,12 @@ class Pet(models.Model):
 class PetPhoto(models.Model):
     photo = models.ImageField(
         validators=(
-            #file_max_size_inMB_validator(5),
+            ValidateFileMaxSizeInMB(5),
         )
     )
     tagged_pets = models.ManyToManyField(
         Pet,
-        #validate atleast one pet
+        #validators=[atleastOnePet]
     )
     description = models.TextField(
         null=True,
