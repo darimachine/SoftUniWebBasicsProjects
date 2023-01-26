@@ -92,11 +92,14 @@ class Pet(models.Model):
     #Methods
 
     #dunder methods
-
+    def __str__(self):
+        return f'{self.name}'
     #Meta
 
     class Meta:
         unique_together=('user_profile','name')
+
+
 
 class PetPhoto(models.Model):
     photo = models.ImageField(
