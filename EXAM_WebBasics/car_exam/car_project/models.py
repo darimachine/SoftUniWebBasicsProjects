@@ -48,7 +48,7 @@ class Car(models.Model):
     TYPE_MAX_LENGTH = 10
 
     MODEL_MAX_LENGTH = 20
-    MODEL_MIN_LENGTH = 20
+    MODEL_MIN_LENGTH = 2
 
     PRICE_MIN_VALUE = 1
 
@@ -70,5 +70,5 @@ class Car(models.Model):
     image = models.URLField()
 
     price= models.FloatField(
-        validators=[MinLengthValidator(PRICE_MIN_VALUE,'Cannot be bellow 1'),]
+        validators=[MinValueValidator(PRICE_MIN_VALUE,'Cannot be bellow 1'),]
     )
